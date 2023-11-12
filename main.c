@@ -8,7 +8,7 @@
 typedef long  Chave;
 typedef struct Registro
 {
-     Chave  chave;
+     Chave chave;
     /*outros componentes*/
 } Registro;
 typedef struct Pagina *PtrPagina;
@@ -32,14 +32,14 @@ void Busca(Registro *x, PtrPagina ap)
         printf("Registro nao esta presente na arvore\n");
         return;
     }
-    while (i < ap->n && x-> chave > ap->r[i - 1]. chave)
+    while (i < ap->n && x-> chave > ap->r[i - 1].chave)
         i++;
-    if (x-> chave == ap->r[i - 1]. chave)
+    if (x-> chave == ap->r[i - 1].chave)
     {
         *x = ap->r[i - 1];
         return;
     }
-    if (x-> chave < ap->r[i - 1]. chave)
+    if (x-> chave < ap->r[i - 1].chave)
         Busca(x, ap->p[i - 1]);
     else
         Busca(x, ap->p[i]);
@@ -53,7 +53,7 @@ void InsereNaPagina(PtrPagina ap, Registro reg, PtrPagina apDir)
     naoAchouPosicao = (k > 0);
     while (naoAchouPosicao)
     {
-        if (reg. chave >= ap->r[k - 1]. chave)
+        if (reg.chave >= ap->r[k - 1].chave)
         {
             naoAchouPosicao = FALSE;
             break;
@@ -83,17 +83,17 @@ void Ins(Registro reg, PtrPagina ap, short *cresceu, Registro *regRetorno, PtrPa
         return;
     }
 
-    while (i < ap->n && reg. chave > ap->r[i - 1]. chave)
+    while (i < ap->n && reg.chave > ap->r[i - 1].chave)
         i++; // Percorrendo vetores dos nós para encontrar valor maior (ou igual) que o novo indice
 
-    if (reg. chave == ap->r[i - 1]. chave)
+    if (reg.chave == ap->r[i - 1].chave)
     {
         printf(" Erro: Registro ja esta presente\n");
         *cresceu = FALSE;
         return;
     }
 
-    if (reg. chave < ap->r[i - 1]. chave)
+    if (reg.chave < ap->r[i - 1].chave)
         i--; // Como o valor nao é igual, só pode ser maior, entao volta-se uma posição
 
     Ins(reg, ap->p[i], cresceu, regRetorno, apRetorno); // Chama-se recursivo para descer na arvore
@@ -240,9 +240,9 @@ void Ret(Chave Ch, PtrPagina *ap, short *diminuiu)
         return;
     }
     Pag = *ap;
-    while (Ind < Pag->n && Ch > Pag->r[Ind - 1]. chave)
+    while (Ind < Pag->n && Ch > Pag->r[Ind - 1].chave)
         Ind++;
-    if (Ch == Pag->r[Ind - 1]. chave)
+    if (Ch == Pag->r[Ind - 1].chave)
     {
         if (Pag->p[Ind - 1] == NULL) /* Pagina folha */
         {
@@ -261,7 +261,7 @@ void Ret(Chave Ch, PtrPagina *ap, short *diminuiu)
             Reconstitui(Pag->p[Ind - 1], *ap, Ind - 1, diminuiu);
         return;
     }
-    if (Ch > Pag->r[Ind - 1]. chave)
+    if (Ch > Pag->r[Ind - 1].chave)
         Ind++;
     Ret(Ch, &Pag->p[Ind - 1], diminuiu);
     if (*diminuiu)
@@ -288,7 +288,7 @@ void ImprimeI(PtrPagina p, int nivel)
         return;
     printf("Nivel %d : ", nivel);
     for (i = 0; i < p->n; i++)
-        printf("%ld ", (long)p->r[i]. chave);
+        printf("%ld ", (long)p->r[i].chave);
     putchar('\n');
     nivel++;
     for (i = 0; i <= p->n; i++)
@@ -307,24 +307,24 @@ void TestaI(PtrPagina p, int pai, short direita)
     int antecessor = 0;
     if (p == NULL)
         return;
-    if (p->r[0]. chave > pai && direita == FALSE)
+    if (p->r[0].chave > pai && direita == FALSE)
     {
-        printf("Erro: filho %12ld maior que pai %d\n", p->r[0]. chave, pai);
+        printf("Erro: filho %12ld maior que pai %d\n", p->r[0].chave, pai);
         return;
     }
     for (i = 0; i < p->n; i++)
     {
-        if (p->r[i]. chave <= antecessor)
+        if (p->r[i].chave <= antecessor)
         {
             printf("Erro: irmao %ld maior que irmao a esquerda %d\n",
-                   (long)p->r[i]. chave, antecessor);
+                   (long)p->r[i].chave, antecessor);
             return;
         }
-        antecessor = p->r[i]. chave;
+        antecessor = p->r[i].chave;
     }
     for (i = 0; i < p->n; i++)
-        TestaI(p->p[i], p->r[i]. chave, FALSE);
-    TestaI(p->p[p->n], p->r[i]. chave, TRUE);
+        TestaI(p->p[i], p->r[i].chave, FALSE);
+    TestaI(p->p[p->n], p->r[i].chave, TRUE);
 }
 
 void Testa(PtrPagina p)
@@ -333,8 +333,8 @@ void Testa(PtrPagina p)
     if (p == NULL)
         return;
     for (i = 0; i < p->n; i++)
-        TestaI(p->p[i], p->r[i]. chave, FALSE);
-    TestaI(p->p[p->n], p->r[i]. chave, TRUE);
+        TestaI(p->p[i], p->r[i].chave, FALSE);
+    TestaI(p->p[p->n], p->r[i].chave, TRUE);
 }
 
 int main()
@@ -347,15 +347,15 @@ int main()
     Pagina *D;
     CriaArvore(&D);
     printf(" chave: ");
-    scanf("%ld%*[^\n]", &x. chave);
+    scanf("%ld%*[^\n]", &x.chave);
     getchar();
-    while (x. chave != 0)
+    while (x.chave != 0)
     {
         Insere(x, &D);
         Imprime(D);
         printf("\n");
         printf(" chave: ");
-        scanf("%ld%*[^\n]", &x. chave);
+        scanf("%ld%*[^\n]", &x.chave);
         getchar();
     }
     Testa(D);
@@ -363,14 +363,14 @@ int main()
     printf("Digite as  chaves para a remocao, ou 0 para sair do programa\n");
     printf("############################################################\n");
     printf(" chave: ");
-    scanf("%ld%*[^\n]", &x. chave);
+    scanf("%ld%*[^\n]", &x.chave);
     getchar();
-    while (x. chave != 0)
+    while (x.chave != 0)
     {
-        Retira(x. chave, &D);
+        Retira(x.chave, &D);
         Imprime(D);
         printf(" chave: ");
-        scanf("%ld%*[^\n]", &x. chave);
+        scanf("%ld%*[^\n]", &x.chave);
         getchar();
     }
     Testa(D);
