@@ -229,50 +229,50 @@ void Antecessor(PtrPagina ap, int Ind, PtrPagina apPai, short *diminuiu)
     *diminuiu = (apPai->n < M);
 }
 
-void Ret(Chave Ch, PtrPagina *ap, short *diminuiu)
+void Ret(Chave ch, PtrPagina *ap, short *diminuiu)
 {
     long j, Ind = 1;
-    PtrPagina Pag;
+    PtrPagina pag;
     if (*ap == NULL)
     {
         printf("Erro: registro nao esta na arvore\n");
         *diminuiu = FALSE;
         return;
     }
-    Pag = *ap;
-    while (Ind < Pag->n && Ch > Pag->r[Ind - 1].chave)
+    pag = *ap;
+    while (Ind < pag->n && ch > pag->r[Ind - 1].chave)
         Ind++;
-    if (Ch == Pag->r[Ind - 1].chave)
+    if (ch == pag->r[Ind - 1].chave)
     {
-        if (Pag->p[Ind - 1] == NULL) /* Pagina folha */
+        if (pag->p[Ind - 1] == NULL) /* Pagina folha */
         {
-            Pag->n--;
-            *diminuiu = (Pag->n < M);       // Detecta underflow
-            for (j = Ind; j <= Pag->n; j++) // Deslocando vetor
+            pag->n--;
+            *diminuiu = (pag->n < M);       // Detecta underflow
+            for (j = Ind; j <= pag->n; j++) // Deslocando vetor
             {
-                Pag->r[j - 1] = Pag->r[j];
-                Pag->p[j] = Pag->p[j + 1];
+                pag->r[j - 1] = pag->r[j];
+                pag->p[j] = pag->p[j + 1];
             }
             return;
         }
         /* Pagina nao e folha: trocar com antecessor */
-        Antecessor(*ap, Ind, Pag->p[Ind - 1], diminuiu);
+        Antecessor(*ap, Ind, pag->p[Ind - 1], diminuiu);
         if (*diminuiu)
-            Reconstitui(Pag->p[Ind - 1], *ap, Ind - 1, diminuiu);
+            Reconstitui(pag->p[Ind - 1], *ap, Ind - 1, diminuiu);
         return;
     }
-    if (Ch > Pag->r[Ind - 1].chave)
+    if (ch > pag->r[Ind - 1].chave)
         Ind++;
-    Ret(Ch, &Pag->p[Ind - 1], diminuiu);
+    Ret(ch, &pag->p[Ind - 1], diminuiu);
     if (*diminuiu)
-        Reconstitui(Pag->p[Ind - 1], *ap, Ind - 1, diminuiu);
+        Reconstitui(pag->p[Ind - 1], *ap, Ind - 1, diminuiu);
 }
 
-void Retira(Chave Ch, PtrPagina *ap)
+void Retira(Chave ch, PtrPagina *ap)
 {
     short diminuiu;
     PtrPagina aux;
-    Ret(Ch, ap, &diminuiu);
+    Ret(ch, ap, &diminuiu);
     if (diminuiu && (*ap)->n == 0) /* Arvore diminui na altura */
     {
         aux = *ap;
