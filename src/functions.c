@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "functions.h"
+#include "../include/functions.h"
 
 void CriaArvore(PtrPagina *raiz)
 {
